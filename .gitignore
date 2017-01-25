@@ -63,3 +63,6 @@ crashlytics.properties
 crashlytics-build.properties
 
 .gradle
+
+# ignore javascript files in the typescript directory, these are generated files
+typescript/*.js
