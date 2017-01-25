@@ -1,0 +1,28 @@
+{
+  "name": "@atomist/gradle",
+  "version": "${project.version}",
+  "description": "TypeScript model for Atomist Gradle Type",
+  "keywords": [
+    "Atomist",
+    "Rug",
+    "Groovy",
+    "Gradle"
+  ],
+  "author": "Atomist, Inc",
+  "license": "Apache-2.0",
+  "atomist" : {
+    "group": "com.atomist",
+    "artifact": "gradle-rug-type"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atomist-rugs/gradle-rug-type.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atomist-rugs/gradle-rug-type/issues"
+  },
+  "homepage": "https://github.com/atomist-rugs/gradle-rug-type#readme",
+  "dependencies": {
+    "@atomist/rug": "${rug.version}"
+  }
+}
