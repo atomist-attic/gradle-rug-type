@@ -25,6 +25,7 @@ class GradleTypeTest extends FlatSpec
     gradleType = new GradleType(mockEvaluator)
 
     val fileArtifacts = Seq[FileArtifact](
+      StringFileArtifact.apply("build.gradle", """apply plugin: 'scala'"""),
       StringFileArtifact.apply("/foo/build.gradle", """apply plugin: 'scala'""")
     )
 
@@ -38,5 +39,26 @@ class GradleTypeTest extends FlatSpec
     val gradleTypeDesc = gradleType.description
 
     gradleTypeDesc should equal(expected)
+  }
+
+  it should "find all gradle build files within a ProjectMutableView" in {
+
+    gradleType.findAllIn(mockMutableView) match {
+
+      case Some(gradleMutableViews) => gradleMutableViews.length should be(2)
+      case None => fail()
+        }
+  }
+
+  it should "create instances of GradleSourceMutableView" in {
+
+    gradleType.findAllIn(mockMutableView) match {
+
+      case Some(gradleMutableViews) => gradleMutableViews foreach { view =>
+
+        view shouldBe a[GradleMutableView]
+      }
+      case None => fail()
+    }
   }
 }

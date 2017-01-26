@@ -1,6 +1,7 @@
 package com.atomist.rug.kind.gradle
 
 import com.atomist.project.ProjectOperationArguments
+import com.atomist.rug.kind.core.ProjectMutableView
 import com.atomist.rug.kind.dynamic.ContextlessViewFinder
 import com.atomist.rug.parser.Selected
 import com.atomist.rug.runtime.rugdsl.Evaluator
@@ -27,6 +28,10 @@ class GradleType(
     Object]): Option[Seq[MutableView[_]]] = {
 
     context match {
+      case pmv: ProjectMutableView =>
+        Some(pmv.currentBackingObject.allFiles
+          .filter(fileArtifact => fileArtifact.name.equals("build.gradle"))
+          .map(gradleFileAsFileArtifact => new GradleMutableView(gradleFileAsFileArtifact, pmv)))
       case _ => None
     }
   }
