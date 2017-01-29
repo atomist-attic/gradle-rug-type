@@ -1,0 +1,33 @@
+group 'com.xyz'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+dependencies {
+
+    compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
+    compile 'commons-io:commons-io:2.5'
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Lambda Fat Jar',
+                'Implementation-Version': version
+    }
+
+    baseName = jar.baseName
+    appendix = jar.appendix + '-all'
+
+    from {
+
+        configurations.compile.collect {
+
+            it.isDirectory() ? it : zipTree(it)
+        }
+    } {
+        exclude 'scala/**/*.class'
+    }
+    with jar
+}
+
+jar.dependsOn('fatJar')
